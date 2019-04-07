@@ -1,0 +1,68 @@
+#### User
+# User graphql schema
+##### Fields
+# - **_id**String - user primary id
+# - **createdAt**String - created at timestamp
+# - **updatedAt**String - updated at timestamp
+# - **email**String - user email
+# - **name**String - user full name
+# - **password**{String} - user password
+type User inherits Node {
+    email: String!
+    name: String!
+    password: String
+}
+
+# UserInput
+##### Input Fields
+# - **email**:String - User email
+# - **name**:String - User full name
+# - **password**:String - User password
+input UserInput {
+    email: String!
+    name: String!
+    password: String!
+}
+
+# UserInputUpdate
+##### Update Fields
+# - **_id**:String - user primary key
+# - **email**:String - User email
+# - **name**:String - User full name
+# - **password**:String - User password
+input UserUpdateInput {
+    _id: String!
+    email: String
+    name: String
+    password: String
+}
+#### UserQueryArgs
+# More detail https://github.com/mixmaxhq/mongo-cursor-pagination#find
+##### Arguments
+# - **limit**Number - The page size. 
+# - **paginatedField**String - The field name to query the range for. The field must be:
+# - **sortAscending**Boolean - True to sort using paginatedField ascending (default is false - descending).
+# - **next**String - The value to start querying the page.
+# - **previous**String - The value to start querying previous page.
+# - **name**String - User full name
+input UserQueryArgs inherits QueryArgs {
+  name: String
+}
+type Query {
+    # get all users
+    users(input: UserQueryArgs): Connection<User>
+
+    # fetch a user
+    user(_id: String!): User
+}
+
+type Mutation {
+    # create a new user
+    createUser(input: UserInput): User
+
+    # update a user
+    updateUser(input: UserUpdateInput): User
+
+    # delete a user
+    deleteUser(_id: String!): DeleteConfirmation
+}

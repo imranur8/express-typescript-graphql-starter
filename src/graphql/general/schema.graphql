@@ -1,0 +1,34 @@
+# Generic GraphQL type
+# Other GraphQL inherits these
+
+type Node {
+    _id: String!
+    createdAt: String!
+    updatedAt: String
+}
+
+type Content {
+    text: String
+}
+
+type DeleteConfirmation {
+    _id: String
+    status: String
+    message: String
+}
+
+type Connection<C> {
+    results: [C]
+    previous: String
+    hasPrevious: Boolean
+    next: String
+    hasNext: Boolean
+}
+
+input QueryArgs {
+  limit: Int
+  paginatedField: String
+  sortAscending: Boolean
+  next: String
+  previous: String
+}
